@@ -1,0 +1,56 @@
+.messageContainer {
+  width: 100%;
+  padding: 0.2rem 1.2rem;
+  height: unset;
+  display: grid;
+}
+
+.message {
+  max-width: 27rem;
+  min-width: 20rem;
+  font-size: large;
+  list-style: none;
+  padding: 0.5rem 1rem;
+  display: flex;
+  color: #d1d7db;
+  overflow-wrap: anywhere;
+  position: relative;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.messageText::after {
+  content: "";
+  width: 7rem;
+  display: inline-block;
+}
+
+.space {
+  width: 5rem;
+}
+
+.messageHour {
+  position: absolute;
+  width: max-content;
+  right: 6px;
+  bottom: 1px;
+}
+
+.messageHour > i {
+  position: relative;
+  width: fit-content;
+  font-size: 1.4rem;
+  font-weight: 400;
+  color: #d1d7dba2;
+}
+
+.receiver {
+  background-color: #24415c;
+  border-radius: 0 1rem 1rem;
+  justify-self: start;
+}
+.sender {
+  background-color: #2373bd;
+  border-radius: 1rem 0 1rem 1rem;
+  justify-self: end;
+}

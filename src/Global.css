@@ -1,0 +1,24 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+body {
+  font-family: system-ui;
+  background-color: #04111b;
+  scroll-behavior: smooth;
+}
+
+#root {
+  min-height: 100vh;
+}

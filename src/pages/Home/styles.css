@@ -1,0 +1,50 @@
+.home {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 80vh;
+  align-items: center;
+}
+
+.homeTitle {
+  color: #d1d7db;
+  font-size: 4rem;
+  margin-bottom: 10rem;
+}
+
+.goToChatForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.goToChatForm > input {
+  width: 80vw;
+  max-width: 52rem;
+  outline: none;
+  border-radius: 2rem;
+  padding: 1rem;
+  text-align: center;
+  display: flex;
+  background-color: #2373bd2f;
+  color: #d1d7db;
+  border: none;
+  font-size: 1.6rem;
+  font-family: system-ui;
+  margin-bottom: 2rem;
+}
+.goToChatForm > input:focus {
+  outline: 1px solid #2373bd;
+}
+
+.goToChatForm > a {
+  text-decoration: none;
+  font-size: 1.6rem;
+  color: #d1d7db;
+  background-color: #2373bd;
+  border-radius: 5rem;
+  padding: 1rem 2rem;
+}
+.goToChatForm > a:hover {
+  /* outline: 1px solid #d1d7db; */
+  box-shadow: 0px 0 20px #2373bd;
+}
