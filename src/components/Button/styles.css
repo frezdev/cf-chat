@@ -1,0 +1,24 @@
+.Button {
+  text-decoration: none;
+  font-size: 1.6rem;
+  border-radius: 5rem;
+  padding: 1.5rem 2rem;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  width: 100%;
+}
+.Button:hover {
+  box-shadow: 0px 0 20px #2373bd;
+}
+
+.primary {
+  color: #d1d7db;
+  background-color: #2373bd;
+}
+
+.secundary {
+  color: #2373bd;
+  background-color: transparent;
+  border: 1px solid #2373bd;
+}

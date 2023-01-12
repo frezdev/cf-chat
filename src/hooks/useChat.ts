@@ -4,7 +4,7 @@ import Message, { MessageProps } from '@/components/Message'
 import formatTime from '@/utils/formatTime'
 
 
-const SOCKET_SERVER = import.meta.env.VITE_SOCKET_URL
+const BASE_URL = import.meta.env.VITE_BASE_URL
 const NEW_MESSAGE = 'newMessage'
 
 type Message = Array<MessageProps>
@@ -14,7 +14,7 @@ const useChat = (chatId: string | undefined) => {
   const socketRef = useRef<Socket>()
 
   useEffect(() => {
-    socketRef.current = socketIoClient(SOCKET_SERVER, {
+    socketRef.current = socketIoClient(BASE_URL, {
       query: { chatId }
     })
 

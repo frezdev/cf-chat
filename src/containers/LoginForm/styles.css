@@ -1,0 +1,37 @@
+.LoginForm {
+  width: 100%;
+  max-width: 45rem;
+  padding: 3rem 4rem;
+  border: .5px solid #2373bd;
+  border-radius: 1.5rem;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 55rem;
+}
+
+.LoginForm--inputContainer input {
+  margin-bottom: 2rem;
+}
+
+.LoginForm--buttonContainer {
+  display: flex;
+  flex-direction: column;
+  height: 40%;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.LoginForm--callToAction span {
+  color: #d1d7db86;
+  font-size: 1.5rem;
+}
+
+@media (max-width: 450px) {
+  .LoginForm {
+    height: 100vh;
+    padding: 2rem 3rem;
+    border: none;
+  }
+}
