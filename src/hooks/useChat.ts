@@ -36,11 +36,14 @@ const useChat = (chatId: string | undefined) => {
 
   const sendMessage = (messageBody: any) => {
     socketRef.current?.emit(NEW_MESSAGE, {
-      body: messageBody,
       senderId: socketRef.current.id,
       hour: formatTime(),
       text: messageBody
     })
+  }
+
+  const getChats = () => {
+    socketRef.current?.emit('getChats', )
   }
 
   return {

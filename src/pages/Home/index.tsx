@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-import './styles.css'
+import './Home.css'
 
 const Home = () => {
   const [id, setId] = useState<string>('')
@@ -8,6 +8,7 @@ const Home = () => {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setId(event.target.value)
   }
+
 
   return (
     <main className='home'>

@@ -2,8 +2,17 @@ import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
 import useGetDataStorage from '@/hooks/useGetDataStorage'
 
+interface User {
+  firstname: string
+  lastname: string
+  username: string
+  userId: string
+  token: string
+}
+
 const loggedUser = useGetDataStorage('loggedCfChat')
-const initialState: any = loggedUser
+
+const initialState: User | null = loggedUser
 
 export const userLoggedSlice = createSlice({
   name: 'loged',
@@ -11,8 +20,7 @@ export const userLoggedSlice = createSlice({
   reducers: {
     setUserLogged: (state, action: PayloadAction<any>) => {
       state = {...action.payload}
-      return state
-    }
+    },
   }
 })
 

@@ -1,19 +1,15 @@
 import React, { FormEvent, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
 import Buttom from '@/components/Button'
 import Input from '@/components/Input'
 import loginServices from '@/services/login'
-import { useSelector, useDispatch } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { setUserLogged } from '@/redux/slices/userLoggedSlice'
-import { RootState } from '@/redux/store'
-
-import './styles.css'
+import './LoginForm.css'
 
 const LoginForm: React.FC = () => {
   const [username, setUsername] = useState<string>('')
   const [password, setPassword] = useState<string>('')
   const dispatch = useDispatch()
-  const navigate = useNavigate()
 
   const handleLogin = async (e: FormEvent) => {
     e.preventDefault()
@@ -24,8 +20,6 @@ const LoginForm: React.FC = () => {
       'loggedCfChat',
       JSON.stringify(loggedUser)
     )
-
-    navigate('/')
   }
 
   return (

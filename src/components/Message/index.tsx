@@ -1,5 +1,5 @@
 import React from 'react'
-import './styles.css'
+import './Message.css'
 
 export interface MessageProps {
   text: string
