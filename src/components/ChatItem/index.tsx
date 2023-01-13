@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { RootState } from '@/redux/store'
+import notPhoto from '@/assets/not-profile-photo.jpg'
+import './ChatItem.css'
 
 interface Member {
   firstname: string
@@ -46,17 +48,17 @@ const ChatItem: React.FC<ChatProps> = ({ members, messages }) => {
 
 
   return (
-    <article>
-      <div>
-        <picture>
+    <article className='ChatItem'>
+      <div className='ChatItemContainer'>
+        <picture className='ChatItemProfilePhoto'>
           <img
-            src={profilePicture}
+            src={profilePicture === '' ? notPhoto : profilePicture}
             alt={`Foto de perfin de ${firstname} ${lastname}`}
           />
         </picture>
 
-        <section>
-          <div>
+        <section className='ChatItemPreview'>
+          <div className='ChatItemPreview-left'>
             <div>
               <p>{username}</p>
             </div>
@@ -64,7 +66,7 @@ const ChatItem: React.FC<ChatProps> = ({ members, messages }) => {
               <span>{lastMessage?.text}</span>
             </div>
           </div>
-          <div>
+          <div className='ChatItemPreview-rigth'>
             <span>
               {lastMessage?.hour}
             </span>

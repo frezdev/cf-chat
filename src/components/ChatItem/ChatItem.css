@@ -1,0 +1,11 @@
+.ChatItemContainer {
+  display: flex;
+  padding: 0.5rem;
+  gap: 1.5rem;
+  justify-content: flex-start;
+}
+
+.ChatItemProfilePhoto img {
+  border-radius: 50%;
+  width: 5.5rem;
+}
