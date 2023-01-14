@@ -9,16 +9,16 @@
   width: 100%;
 }
 .Button:hover {
-  box-shadow: 0px 0 20px #2373bd;
+  box-shadow: 0px 0 20px var(--bg-color-secundary);
 }
 
 .primary {
-  color: #d1d7db;
-  background-color: #2373bd;
+  color: var(--text-color-primary);
+  background-color: var(--bg-color-secundary);
 }
 
 .secundary {
-  color: #2373bd;
+  color: var(--bg-color-secundary);
   background-color: transparent;
-  border: 1px solid #2373bd;
+  border: 1px solid var(--bg-color-secundary);
 }

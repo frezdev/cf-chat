@@ -12,16 +12,18 @@ const ChatsContainer = () => {
     const get = async () => {
       const data = await getChats('/api/chats', configRequest)
       setChats(data)
-      console.log(chats)
     }
     get()
   }, [])
 
   return (
-    <aside className='ChatsItemsContainer'>
-      {chats.map(chat => (
-        <ChatItem key={chat.id} {...chat} />
-      ))}
+    <aside className='ChatsItems'>
+      <header className='ChatsItemsContainer-header'>Header</header>
+      <div className='ChatsItemsContainer'>
+        {chats.map(chat => (
+          <ChatItem key={chat.id} {...chat} />
+        ))}
+      </div>
     </aside>
   )
 }

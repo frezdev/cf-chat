@@ -1,3 +1,5 @@
+@import 'vars.css';
+
 * {
   margin: 0;
   padding: 0;
@@ -15,8 +17,9 @@ html {
 
 body {
   font-family: system-ui;
-  background-color: #04111b;
+  background-color: var(--bg-color-primary);
   scroll-behavior: smooth;
+  color: var(--text-color-primary);
 }
 
 #root {

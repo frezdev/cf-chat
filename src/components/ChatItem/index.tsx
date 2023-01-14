@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { RootState } from '@/redux/store'
+import useChat from '@/hooks/useChat'
+import { openChat } from '@/redux/slices/openCurrentChat'
 import notPhoto from '@/assets/not-profile-photo.jpg'
 import './ChatItem.css'
 
@@ -14,12 +16,13 @@ interface Member {
 
 interface Message {
   text: string
-  hour: string
+  createdAt: string
 }
 
 interface ChatProps {
   members: Array<Member>
   messages: Array<Message>
+  id: string
 }
 
 const initialState: Member = {
@@ -30,11 +33,13 @@ const initialState: Member = {
   id: ''
 }
 
-const ChatItem: React.FC<ChatProps> = ({ members, messages }) => {
+const ChatItem: React.FC<ChatProps> = ({ members, messages, id}) => {
   const [chatMember, setChatMember] = useState<Member>(initialState)
   const [lastMessage, setLastMessage] = useState<Message>()
   const { user } = useSelector((state: RootState) => state)
+  const dispatch = useDispatch()
 
+  const { firstname, lastname, username, profilePicture } = chatMember
 
   useEffect(() => {
     const currentMember = members.find(member => member.id !== user?.userId)
@@ -44,11 +49,18 @@ const ChatItem: React.FC<ChatProps> = ({ members, messages }) => {
     }
   }, [])
 
-  const { firstname, lastname, username, profilePicture } = chatMember
+  let dateCreated = ''
+  if (lastMessage?.createdAt) {
+    dateCreated = new Date(lastMessage?.createdAt).toLocaleDateString()
+  }
+
+  const handleChat = () => {
+    dispatch(openChat({id, isOpen: true}))
+  }
 
 
   return (
-    <article className='ChatItem'>
+    <article className='ChatItem' onClick={handleChat}>
       <div className='ChatItemContainer'>
         <picture className='ChatItemProfilePhoto'>
           <img
@@ -59,16 +71,16 @@ const ChatItem: React.FC<ChatProps> = ({ members, messages }) => {
 
         <section className='ChatItemPreview'>
           <div className='ChatItemPreview-left'>
-            <div>
+            <div className='ChatItem-username'>
               <p>{username}</p>
             </div>
-            <div>
+            <div className='ChatItem-lastMessage'>
               <span>{lastMessage?.text}</span>
             </div>
           </div>
           <div className='ChatItemPreview-rigth'>
             <span>
-              {lastMessage?.hour}
+              {dateCreated}
             </span>
           </div>
         </section>

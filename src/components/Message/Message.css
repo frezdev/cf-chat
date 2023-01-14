@@ -6,16 +6,17 @@
 }
 
 .message {
-  max-width: 27rem;
+  max-width: 35rem;
   min-width: 20rem;
-  font-size: large;
+  font-size: initial;
   list-style: none;
   padding: 0.5rem 1rem;
   display: flex;
-  color: #d1d7db;
+  color: var(--text-color-primary);
   overflow-wrap: anywhere;
   position: relative;
   flex-wrap: wrap;
+  height: max-content;
   justify-content: space-between;
 }
 
@@ -41,16 +42,16 @@
   width: fit-content;
   font-size: 1.4rem;
   font-weight: 400;
-  color: #d1d7dba2;
+  color: var(--text-color-secundary);
 }
 
 .receiver {
-  background-color: #24415c;
+  background-color: var(--bg-color-tertiary);
   border-radius: 0 1rem 1rem;
   justify-self: start;
 }
 .sender {
-  background-color: #2373bd;
+  background-color: var(--bg-color-secundary);
   border-radius: 1rem 0 1rem 1rem;
   justify-self: end;
 }

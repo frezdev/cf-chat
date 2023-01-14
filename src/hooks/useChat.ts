@@ -1,4 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
+import { useSelector } from 'react-redux'
+import { RootState } from '@/redux/store'
 import socketIoClient, { Socket }  from 'socket.io-client'
 import Message, { MessageProps } from '@/components/Message'
 import formatTime from '@/utils/formatTime'
@@ -10,6 +12,7 @@ const NEW_MESSAGE = 'newMessage'
 type Message = Array<MessageProps>
 
 const useChat = (chatId: string | undefined) => {
+  const { user } = useSelector((state: RootState) => state)
   const [messages, setMessages] = useState<Message>([])
   const socketRef = useRef<Socket>()
 
@@ -23,7 +26,7 @@ const useChat = (chatId: string | undefined) => {
       const incomingMessage: MessageProps = {
         ...message,
         hour: formatTime(),
-        sender: message.senderId === socketRef.current?.id
+        sender: message.sender === user?.userId
       }
 
       setMessages(prevState => [...prevState, incomingMessage])
@@ -34,11 +37,12 @@ const useChat = (chatId: string | undefined) => {
     }
   }, [chatId])
 
-  const sendMessage = (messageBody: any) => {
+  const sendMessage = (text: string) => {
     socketRef.current?.emit(NEW_MESSAGE, {
-      senderId: socketRef.current.id,
+      sender: user?.userId,
+      chatId,
       hour: formatTime(),
-      text: messageBody
+      text: text
     })
   }
 

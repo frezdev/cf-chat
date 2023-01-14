@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import Home from '@/pages/Home'
-import Chat from '@/pages/Chat'
+import Chat from '@/containers/Chat'
 import Login from '@/pages/Login/'
 import { useSelector } from 'react-redux'
 import { RootState } from '@/redux/store'

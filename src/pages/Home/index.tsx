@@ -1,28 +1,26 @@
-import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import ChatsContainer from '@/containers/ChatsContainer'
+import { useSelector } from 'react-redux'
+import { RootState } from '@/redux/store'
 import './Home.css'
+import Chat from '@/containers/Chat'
 
 const Home = () => {
-  const [id, setId] = useState<string>('')
+  const [currentId, setCurrentId] = useState('')
+  const { isOpen, id } = useSelector((state: RootState) => state.currentChat)
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setId(event.target.value)
-  }
-
+  useEffect(() => {
+    setCurrentId(id)
+  }, [id])
 
   return (
     <main className='home'>
-      <h1 className='homeTitle'>ChatCF</h1>
-      <form className='goToChatForm'>
-        <input
-          type="text"
-          placeholder='Escribe un ID'
-          onChange={handleChange}
-        />
-        <Link to={`/chat/${id}`}>
-          Go to chat
-        </Link>
-      </form>
+      <ChatsContainer />
+      {
+        isOpen
+          ? <Chat />
+          : <h2 style={{width: "100%", textAlign: "center"}}>Comienza a chatar</h2>
+      }
     </main>
   )
 }

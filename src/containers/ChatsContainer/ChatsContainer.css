@@ -1,4 +1,27 @@
-.ChatsItemsContainer {
-  width: 45%;
+.ChatsItems {
+  width: 100%;
   max-width: 45rem;
+  height: 100vh;
+}
+
+.ChatsItemsContainer {
+  padding: 1rem;
+  height: calc(100% - 7rem);
+  overflow-y: auto;
+}
+
+.ChatsItemsContainer::-webkit-scrollbar {
+  -webkit-appearance: none;
+}
+.ChatsItemsContainer::-webkit-scrollbar:vertical {
+  width:5px;
+}
+.ChatsItemsContainer::-webkit-scrollbar-thumb {
+  background-color: #9b9b9b5d;
+  border-radius: 20px;
+}
+
+.ChatsItemsContainer-header {
+  height: 6.5rem;
+  background-color: var(--bg-color-opacity);
 }

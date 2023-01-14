@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit'
 import userLogedReducer from './slices/userLoggedSlice'
+import openCurrentChat from './slices/openCurrentChat'
 
 export const store = configureStore({
   reducer: {
-    user: userLogedReducer
+    user: userLogedReducer,
+    currentChat: openCurrentChat
   }
 })
 
