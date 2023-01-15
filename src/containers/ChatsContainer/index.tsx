@@ -9,11 +9,10 @@ const ChatsContainer = () => {
   const { configRequest } = useCongigAutorization()
 
   useEffect(() => {
-    const get = async () => {
-      const data = await getChats('/api/chats', configRequest)
+    (async () => {
+      const data = await getChats(configRequest)
       setChats(data)
-    }
-    get()
+    })()
   }, [])
 
   return (

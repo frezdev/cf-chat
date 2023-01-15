@@ -26,6 +26,7 @@
 
 .messagesContainer {
   overflow-y: auto;
+  padding-bottom: 1rem;
   height: calc(100% - 13rem);
 }
 .messagesContainer::-webkit-scrollbar {

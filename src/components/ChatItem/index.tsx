@@ -5,6 +5,7 @@ import useChat from '@/hooks/useChat'
 import { openChat } from '@/redux/slices/openCurrentChat'
 import notPhoto from '@/assets/not-profile-photo.jpg'
 import './ChatItem.css'
+import { getMessagesSocket } from '@/services/chatsSevices'
 
 interface Member {
   firstname: string
@@ -35,19 +36,26 @@ const initialState: Member = {
 
 const ChatItem: React.FC<ChatProps> = ({ members, messages, id}) => {
   const [chatMember, setChatMember] = useState<Member>(initialState)
-  const [lastMessage, setLastMessage] = useState<Message>()
-  const { user } = useSelector((state: RootState) => state)
+  const [lastMessage, setLastMessage] = useState<any>()
+  const { user, currentChat: { id: chatId }} = useSelector((state: RootState) => state)
+  const { messages: newMessages } = useChat(chatId)
   const dispatch = useDispatch()
 
   const { firstname, lastname, username, profilePicture } = chatMember
 
   useEffect(() => {
     const currentMember = members.find(member => member.id !== user?.userId)
+
     if (currentMember !== undefined) {
+      if (newMessages.length > 0 && chatId === id) {
+        setLastMessage(newMessages.at(-1))
+      } else if (newMessages.length === 0 && (chatId === id || chatId === '')) {
+        setLastMessage(messages.at(-1))
+      }
       setChatMember(currentMember)
-      setLastMessage(messages.at(-1))
     }
-  }, [])
+    getMessagesSocket(chatId)
+  }, [newMessages])
 
   let dateCreated = ''
   if (lastMessage?.createdAt) {

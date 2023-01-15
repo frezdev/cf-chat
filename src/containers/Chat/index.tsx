@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { RootState } from '@/redux/store'
 import Message from '@/components/Message'
@@ -6,12 +6,17 @@ import useChat from '@/hooks/useChat'
 import SendIcon from '@mui/icons-material/Send'
 import Input from '@/components/Input'
 import Buttom from '@/components/Button'
+import { getMessages } from '@/services/chatsSevices'
+import { useCongigAutorization } from '@/utils/configAuthorization'
 import './Chat.css'
 
-const Chat = () => {
-  const { id } = useSelector((state: RootState) => state.currentChat)
+const Chat: React.FC<any> = ({chat}) => {
+
+  const { id: chatId } = useSelector((state: RootState) => state.currentChat)
   const [inputValue, setInputValue] = useState('');
-  const { messages, sendMessage } = useChat(id)
+  const [oldMessages, setOldMessages] = useState<any>([])
+  const { messages, sendMessage, setMessages } = useChat(chatId)
+  const { configRequest } = useCongigAutorization()
   const container: any = useRef()
 
   const handleSubmit = (event: any) => {
@@ -21,14 +26,25 @@ const Chat = () => {
   }
 
   useEffect(() => {
+    (async () => {
+      const data = await getMessages(chatId, configRequest)
+      setMessages([])
+      setOldMessages(data)
+    })()
+  }, [chatId])
+
+  useEffect(() => {
     container.current.scroll(0, container.current.scrollHeight * 2)
   }, [messages])
 
   return (
     <div className='MainChatContainer'>
       <div className='chatContainer'>
-        <header className='chatHeader'>Chat ID: { id }</header>
+        <header className='chatHeader'>Chat ID: { chatId }</header>
         <ol ref={container} className='messagesContainer'>
+          {oldMessages.map((message: any) => (
+            <Message key={message.id} {...message} />
+          ))}
           {messages.map((message, index) => (
             <Message key={index} {...message} />
           ))}

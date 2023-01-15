@@ -26,7 +26,6 @@ const useChat = (chatId: string | undefined) => {
       const incomingMessage: MessageProps = {
         ...message,
         hour: formatTime(),
-        sender: message.sender === user?.userId
       }
 
       setMessages(prevState => [...prevState, incomingMessage])
@@ -35,7 +34,8 @@ const useChat = (chatId: string | undefined) => {
     return () => {
       socketRef.current?.disconnect()
     }
-  }, [chatId])
+  }, [chatId, messages])
+
 
   const sendMessage = (text: string) => {
     socketRef.current?.emit(NEW_MESSAGE, {
@@ -52,6 +52,7 @@ const useChat = (chatId: string | undefined) => {
 
   return {
     messages,
+    setMessages,
     sendMessage
   }
 }
