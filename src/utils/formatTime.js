@@ -1,5 +1,5 @@
-const formatTime = (): string => {
-  const date: Date = new Date()
+const formatTime = () => {
+  const date = new Date()
 
   const format = date.toLocaleTimeString('es-CO', {
     hour12: true,

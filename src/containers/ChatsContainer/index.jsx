@@ -4,8 +4,8 @@ import { useCongigAutorization } from '@/utils/configAuthorization'
 import ChatItem from '@/components/ChatItem'
 import './ChatsContainer.css'
 
-const ChatsContainer = () => {
-  const [chats, setChats] = useState<Array<any>>([])
+const ChatsContainer = ({ messages, socket }) => {
+  const [chats, setChats] = useState([])
   const { configRequest } = useCongigAutorization()
 
   useEffect(() => {
@@ -13,14 +13,15 @@ const ChatsContainer = () => {
       const data = await getChats(configRequest)
       setChats(data)
     })()
-  }, [])
+
+  }, [messages])
 
   return (
     <aside className='ChatsItems'>
       <header className='ChatsItemsContainer-header'>Header</header>
       <div className='ChatsItemsContainer'>
         {chats.map(chat => (
-          <ChatItem key={chat.id} {...chat} />
+          <ChatItem socket={socket} key={chat.id} {...chat} />
         ))}
       </div>
     </aside>

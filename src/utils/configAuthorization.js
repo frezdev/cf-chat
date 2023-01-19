@@ -1,8 +1,7 @@
 import { useSelector } from 'react-redux'
-import { RootState } from '@/redux/store'
 
 const useCongigAutorization = () => {
-  const { user } = useSelector((state: RootState) => state)
+  const { user } = useSelector((state) => state)
 
   const configRequest = {
     headers: {

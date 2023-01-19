@@ -6,12 +6,12 @@ import { useDispatch } from 'react-redux'
 import { setUserLogged } from '@/redux/slices/userLoggedSlice'
 import './LoginForm.css'
 
-const LoginForm: React.FC = () => {
-  const [username, setUsername] = useState<string>('')
-  const [password, setPassword] = useState<string>('')
+const LoginForm = () => {
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
   const dispatch = useDispatch()
 
-  const handleLogin = async (e: FormEvent) => {
+  const handleLogin = async (e) => {
     e.preventDefault()
 
     const loggedUser = await loginServices.login({ username, password })

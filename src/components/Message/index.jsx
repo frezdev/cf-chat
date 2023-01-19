@@ -1,18 +1,11 @@
-import { RootState } from '@/redux/store'
 import React from 'react'
 import { useSelector } from 'react-redux'
 import './Message.css'
 
-export interface MessageProps {
-  text: string
-  hour: string
-  sender: string
-  id: string
-}
 
-const Message: React.FC<MessageProps> = (props) => {
+const Message = (props) => {
   const { text, hour, sender } = props
-  const { user } = useSelector((state: RootState) => state)
+  const { user } = useSelector((state) => state)
 
   return (
     <div className='messageContainer'>

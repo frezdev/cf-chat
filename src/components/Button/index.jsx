@@ -1,16 +1,8 @@
-import React, { MouseEventHandler } from 'react'
+import React from 'react'
 import './Buttom.css'
 
-interface ButtomProps {
-  type?: 'button' | 'submit' | 'reset'
-  text: any,
-  styles?: object,
-  styleClass?: string
-  disabled?: boolean
-  onClick?: MouseEventHandler<HTMLButtonElement>
-}
 
-const Buttom: React.FC<ButtomProps> = (props) => {
+const Buttom = (props) => {
   const {
     type = 'button',
     text,

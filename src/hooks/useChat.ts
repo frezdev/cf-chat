@@ -11,30 +11,35 @@ const NEW_MESSAGE = 'newMessage'
 
 type Message = Array<MessageProps>
 
-const useChat = (chatId: string | undefined) => {
+const useChat = (chatId: string, userId: string, destinationUser: string = '') => {
   const { user } = useSelector((state: RootState) => state)
   const [messages, setMessages] = useState<Message>([])
   const socketRef = useRef<Socket>()
 
   useEffect(() => {
     socketRef.current = socketIoClient(BASE_URL, {
-      query: { chatId }
+      query: { chatId, userId, destinationUser }
     })
+
+    socketRef.current.on('connection', () => {
+      console.log(socketRef.current)
+    })
+
+    //console.log(socketRef.current.id)
 
     socketRef.current.on(NEW_MESSAGE, (message) => {
 
       const incomingMessage: MessageProps = {
         ...message,
-        hour: formatTime(),
       }
-
+      console.log(message)
       setMessages(prevState => [...prevState, incomingMessage])
     })
 
     return () => {
       socketRef.current?.disconnect()
     }
-  }, [chatId, messages])
+  })
 
 
   const sendMessage = (text: string) => {
@@ -46,7 +51,7 @@ const useChat = (chatId: string | undefined) => {
     })
   }
 
-  const getChats = () => {
+  const getChats = (id: string) => {
     socketRef.current?.emit('getChats', )
   }
 

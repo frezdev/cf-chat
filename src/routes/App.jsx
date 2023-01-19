@@ -3,11 +3,10 @@ import Home from '@/pages/Home'
 import Chat from '@/containers/Chat'
 import Login from '@/pages/Login/'
 import { useSelector } from 'react-redux'
-import { RootState } from '@/redux/store'
 import '../Global.css'
 
 function App() {
-  const { user } = useSelector((state: RootState) => state)
+  const { user } = useSelector((state) => state)
 
   return (
     <BrowserRouter>
