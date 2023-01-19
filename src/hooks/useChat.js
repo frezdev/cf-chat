@@ -28,7 +28,6 @@ const useChat = (chatId: string, userId: string, destinationUser: string = '') =
     //console.log(socketRef.current.id)
 
     socketRef.current.on(NEW_MESSAGE, (message) => {
-
       const incomingMessage: MessageProps = {
         ...message,
       }
@@ -36,10 +35,17 @@ const useChat = (chatId: string, userId: string, destinationUser: string = '') =
       setMessages(prevState => [...prevState, incomingMessage])
     })
 
+    socketRef.current.on('getMessages', (data) => {
+      console.log(data)
+    })
+    socketRef.current?.emit('getMessages', chatId)
+
+
     return () => {
       socketRef.current?.disconnect()
     }
-  })
+
+  }, [chatId])
 
 
   const sendMessage = (text: string) => {
