@@ -13,10 +13,9 @@ import './Chat.css'
 
 const Chat = ({ socket }) => {
   const user = useSelector(state => state.user)
-  const { id: chatId } = useSelector((state) => state.currentChat)
-  const { messages } = useSelector((state) => state.chatState)
+  const { id: chatId, receiverId } = useSelector((state) => state.currentChat)
+  const [messages, setMessages] = useState([])
   const [inputValue, setInputValue] = useState('');
-  const dispatch = useDispatch()
 
   const [oldMessages, setOldMessages] = useState([])
   const { configRequest } = useCongigAutorization()
@@ -28,23 +27,17 @@ const Chat = ({ socket }) => {
 
   useEffect(() => {
     socket.on('sendMessage', message => {
-      const newMessage = {
-        ...message
-      }
-      console.log(message)
-      dispatch(chatReducer({
-        messages: [...messages, newMessage]
-      }))
-      //setOldMessages([...oldMessages, newMessage])
+      setMessages([...messages, message])
     })
   }, [messages])
 
   useEffect(() => {
     (async () => {
       const data = await getMessages(chatId, configRequest)
-      setOldMessages(data)
+      setOldMessages([...data])
     })()
     setOldMessages([])
+    setMessages([])
   }, [chatId])
 
   useEffect(() => {
@@ -60,7 +53,8 @@ const Chat = ({ socket }) => {
         chatId,
         hour: formatTime()
       },
-      chatId
+      chatId,
+      receiverId
     })
     setInputValue('')
   }

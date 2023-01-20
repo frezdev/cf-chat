@@ -2,7 +2,8 @@ import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
   id: '',
-  isOpen: false
+  isOpen: false,
+  receiverId: ''
 }
 
 export const openCurrentChat = createSlice({

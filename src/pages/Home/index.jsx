@@ -9,7 +9,7 @@ const BASE_URL = import.meta.env.VITE_BASE_URL
 
 const Home = () => {
   const [socket, setSocket] = useState()
-  const { username, userId } = useSelector((state) => state.user)
+  const { userId } = useSelector((state) => state.user)
   const { isOpen } = useSelector((state) => state.currentChat)
 
   useEffect(() => {
@@ -17,8 +17,8 @@ const Home = () => {
   }, [])
 
   useEffect(() => {
-    socket?.emit('neeUser', username)
-  }, [socket, username])
+    socket?.emit('newUser', userId)
+  }, [socket, userId])
 
   return (
     <main className='home'>

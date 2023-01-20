@@ -14,7 +14,7 @@ const initialState = {
   id: ''
 }
 
-const ChatItem = ({ members, messages, id, socket}) => {
+const ChatItem = ({ members, id, socket}) => {
   const [currentMember, setCurrentMember] = useState(initialState)
   const userId = useSelector((state) => state.user.userId)
   const dispatch = useDispatch()
@@ -22,12 +22,17 @@ const ChatItem = ({ members, messages, id, socket}) => {
   useEffect(() => {
     const current = members.find(member => member.id !== userId)
     setCurrentMember(prev => ({...prev, ...current}))
+
+    socket.on('lastMessage', message => {
+      console.log(message)
+    })
   }, [socket])
 
   const handleOpenChat = () => {
     dispatch(openChat({
       isOpen: true,
-      id: id
+      id: id,
+      receiverId: currentMember.id
     }))
   }
 
@@ -37,7 +42,7 @@ const ChatItem = ({ members, messages, id, socket}) => {
         <picture className='ChatItemProfilePhoto'>
           <img
             src={currentMember.profilePicture || notPhoto}
-            alt={`Foto de perfil`}
+            alt={`Foto de perfil de ${currentMember.username}`}
           />
         </picture>
 

@@ -1,20 +1,17 @@
 import { useEffect, useRef, useState } from 'react'
 import { useSelector } from 'react-redux'
-import { RootState } from '@/redux/store'
-import socketIoClient, { Socket }  from 'socket.io-client'
-import Message, { MessageProps } from '@/components/Message'
+import socketIoClient  from 'socket.io-client'
 import formatTime from '@/utils/formatTime'
 
 
 const BASE_URL = import.meta.env.VITE_BASE_URL
 const NEW_MESSAGE = 'newMessage'
 
-type Message = Array<MessageProps>
 
-const useChat = (chatId: string, userId: string, destinationUser: string = '') => {
-  const { user } = useSelector((state: RootState) => state)
-  const [messages, setMessages] = useState<Message>([])
-  const socketRef = useRef<Socket>()
+const useChat = (chatId, userId, destinationUser = '') => {
+  const { user } = useSelector((state) => state)
+  const [messages, setMessages] = useState([])
+  const socketRef = useRef()
 
   useEffect(() => {
     socketRef.current = socketIoClient(BASE_URL, {
@@ -28,7 +25,7 @@ const useChat = (chatId: string, userId: string, destinationUser: string = '') =
     //console.log(socketRef.current.id)
 
     socketRef.current.on(NEW_MESSAGE, (message) => {
-      const incomingMessage: MessageProps = {
+      const incomingMessage = {
         ...message,
       }
       console.log(message)
@@ -48,7 +45,7 @@ const useChat = (chatId: string, userId: string, destinationUser: string = '') =
   }, [chatId])
 
 
-  const sendMessage = (text: string) => {
+  const sendMessage = (text) => {
     socketRef.current?.emit(NEW_MESSAGE, {
       sender: user?.userId,
       chatId,
@@ -57,7 +54,7 @@ const useChat = (chatId: string, userId: string, destinationUser: string = '') =
     })
   }
 
-  const getChats = (id: string) => {
+  const getChats = (id) => {
     socketRef.current?.emit('getChats', )
   }
 
