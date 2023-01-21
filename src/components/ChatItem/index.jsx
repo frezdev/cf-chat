@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { openChat } from '@/redux/slices/openCurrentChat'
-import { chatReducer } from '@/redux/slices/chatSlice'
+import { chatsReducer } from '@/redux/slices/chatsSlice'
 import notPhoto from '@/assets/not-profile-photo.jpg'
 import './ChatItem.css'
 
