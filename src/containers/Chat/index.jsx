@@ -1,48 +1,60 @@
 import { useState, useRef, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { chatsReducer } from '@/redux/slices/chatsSlice'
 import Message from '@/components/Message'
 import SendIcon from '@mui/icons-material/Send'
 import Input from '@/components/Input'
 import Buttom from '@/components/Button'
-import { getMessages } from '@/services/chatsSevices'
-import { useCongigAutorization } from '@/utils/configAuthorization'
 import formatTime from '@/utils/formatTime'
-import { chatReducer } from '@/redux/slices/chatSlice'
 
 import './Chat.css'
 
 const Chat = ({ socket }) => {
-  const user = useSelector(state => state.user)
-  const { id: chatId, receiverId } = useSelector((state) => state.currentChat)
   const [messages, setMessages] = useState([])
   const [inputValue, setInputValue] = useState('');
-
-  const [oldMessages, setOldMessages] = useState([])
-  const { configRequest } = useCongigAutorization()
+  const user = useSelector(state => state.user)
+  const { id: chatId, receiverId } = useSelector((state) => state.currentChat)
+  const { chats } = useSelector(state => state.chatsState)
   const container = useRef()
+  const dispatch = useDispatch()
 
   useEffect(() => {
     socket.emit('newChat', chatId)
-  }, [])
+  }, [chatId])
 
   useEffect(() => {
+
     socket.on('sendMessage', message => {
-      setMessages([...messages, message])
+      const currentChat = chats.find(chat => {
+        return chat.id === chatId
+      })
+
+      const updateMessages = chats.map(chat => {
+        if (chat.id == chatId) {
+          chat = {...chat, messages: [...chat.messages, message]}
+        }
+        return chat
+      })
+
+      console.log(updateMessages)
+      if (chatId === currentChat.id) {
+        dispatch(chatsReducer({ chats: [...updateMessages]}))
+        setMessages([...messages, message])
+      }
     })
   }, [messages])
 
+
   useEffect(() => {
-    (async () => {
-      const data = await getMessages(chatId, configRequest)
-      setOldMessages([...data])
-    })()
-    setOldMessages([])
-    setMessages([])
+    const currentChat = chats.find(chat => {
+      return chat.id === chatId
+    })
+    setMessages(currentChat.messages)
   }, [chatId])
 
   useEffect(() => {
     container.current.scroll(0, container.current.scrollHeight * 2)
-  }, [messages, oldMessages])
+  }, [messages, chatId])
 
   const handleSubmit = (event) => {
     event.preventDefault()
@@ -64,11 +76,8 @@ const Chat = ({ socket }) => {
       <div className='chatContainer'>
         <header className='chatHeader'>Chat ID: { chatId }</header>
         <ol ref={container} className='messagesContainer'>
-          {oldMessages.map((message, index) => (
-            <Message key={index} {...message} />
-          ))}
           {messages.map((message, index) => (
-            <Message key={index} {...message} />
+            <Message key={message.id || index} {...message} />
           ))}
         </ol>
         <form className='chatForm' onSubmit={(e) => handleSubmit(e)}>

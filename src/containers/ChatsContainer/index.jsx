@@ -6,21 +6,18 @@ import { useDispatch, useSelector } from 'react-redux'
 import { chatsReducer } from '@/redux/slices/chatsSlice'
 import './ChatsContainer.css'
 
-const ChatsContainer = ({ messages, socket }) => {
-  const [chats, setChats] = useState([])
+const ChatsContainer = ({ socket }) => {
   const { configRequest } = useCongigAutorization()
-  const chatsState = useSelector(state => state.chatsState)
+  const { chats } = useSelector(state => state.chatsState)
   const dispatch = useDispatch()
 
   useEffect(() => {
     (async () => {
       const data = await getChats(configRequest)
-      setChats(data)
-      dispatch(chatsReducer(data))
-      console.log(chatsState)
+      dispatch(chatsReducer({chats: data}))
     })()
 
-  }, [messages])
+  }, [])
 
   return (
     <aside className='ChatsItems'>

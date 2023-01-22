@@ -1,21 +1,21 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-const initialState = []
+const initialState = {
+  chats: [],
+}
 
 export const chatsSlice = createSlice({
   name: 'chatsReducer',
   initialState,
   reducers: {
     chatsReducer: (state, action) => {
-      console.log({state});
-      console.log(action.payload);
-      return [
+      return {
         ...state,
         ...action.payload
-      ]
+      }
     }
   }
 })
 
-export const { chatsReducer } = chatsSlice.actions
+export const { chatsReducer, updateOneChat } = chatsSlice.actions
 export default chatsSlice.reducer
