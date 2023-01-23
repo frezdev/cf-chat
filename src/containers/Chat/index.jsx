@@ -9,17 +9,25 @@ import formatTime from '@/utils/formatTime'
 
 import './Chat.css'
 
-const Chat = ({ socket }) => {
+const Chat = ({ socket, chatId }) => {
   const [messages, setMessages] = useState([])
-  const [inputValue, setInputValue] = useState('');
+  const [inputValue, setInputValue] = useState('')
+  const [currentChatId, setCurrentChatId] = useState('')
   const user = useSelector(state => state.user)
-  const { id: chatId, receiverId } = useSelector((state) => state.currentChat)
+  const { receiverId } = useSelector((state) => state.currentChat)
   const { chats } = useSelector(state => state.chatsState)
   const container = useRef()
   const dispatch = useDispatch()
 
   useEffect(() => {
+    socket.emit('exit', currentChatId)
     socket.emit('newChat', chatId)
+    setCurrentChatId(chatId)
+
+    const currentChat = chats.find(chat => {
+      return chat.id === chatId
+    })
+    setMessages([...currentChat.messages])
   }, [chatId])
 
   useEffect(() => {
@@ -30,27 +38,19 @@ const Chat = ({ socket }) => {
       })
 
       const updateMessages = chats.map(chat => {
-        if (chat.id == chatId) {
+        if (chat.id === chatId) {
           chat = {...chat, messages: [...chat.messages, message]}
         }
         return chat
       })
 
-      console.log(updateMessages)
-      if (chatId === currentChat.id) {
+      if (chatId === message.chatId) {
+        console.log({chatId: chatId, messageChatId: message.chatId})
         dispatch(chatsReducer({ chats: [...updateMessages]}))
         setMessages([...messages, message])
       }
     })
   }, [messages])
-
-
-  useEffect(() => {
-    const currentChat = chats.find(chat => {
-      return chat.id === chatId
-    })
-    setMessages(currentChat.messages)
-  }, [chatId])
 
   useEffect(() => {
     container.current.scroll(0, container.current.scrollHeight * 2)

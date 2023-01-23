@@ -11,9 +11,10 @@ const Home = () => {
   const [socket, setSocket] = useState()
   const { userId } = useSelector((state) => state.user)
   const { isOpen } = useSelector((state) => state.currentChat)
+  const { id } = useSelector((state) => state.currentChat)
 
   useEffect(() => {
-    setSocket(io(BASE_URL, { query: { userId } }))
+    setSocket(io(BASE_URL))
   }, [])
 
   useEffect(() => {
@@ -25,7 +26,7 @@ const Home = () => {
       <ChatsContainer socket={socket} messages={[]} />
       {
         isOpen
-          ? <Chat socket={socket} sendMessage={''} />
+          ? <Chat socket={socket} chatId={id} sendMessage={''} />
           : <h2 style={{width: "100%", textAlign: "center"}}>Comienza a chatar</h2>
       }
     </main>
